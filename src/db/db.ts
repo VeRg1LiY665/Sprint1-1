@@ -1,28 +1,27 @@
 // import {VideoDBType} from './video-db-type'
 
-export type VidType = {
-    author: string[],
-    id: number[],
-    title: string[]
+import any = jasmine.any;
+
+type VideoDBType = {
+    author: string;
+    id: number;
+    title: string;
+}
+export type DBType = { // типизация базы данных (что мы будем в ней хранить)
+    videos: VideoDBType[]; // VideoDBType[]
+    // some: any[]
+}
+export const db: DBType|any = { // создаём базу данных (пока это просто переменная)
+    videos: []
 }
 
-export const db: VidType = { // создаём базу данных (пока это просто переменная)
-    author: [],
-    id: [],
-    title: []
-}
-//export const db: {videos: VidType} ={videos}
 // функция для быстрой очистки/заполнения базы данных для тестов
-export const setDB = (dataset?: Partial<VidType>) => {
+export const setDB = (dataset?: Partial<DBType>) => {
     if (!dataset) { // если в функцию ничего не передано - то очищаем базу данных
-        db.author = []
-        db.id = []
-        db.title = []
+        db.videos = []
         return
     }
 
     // если что-то передано - то заменяем старые значения новыми
-    db.author = dataset.author || db.author
-    db.id = dataset.id || db.id
-    db.title = dataset.title || db.title
+    db.videos = dataset || db.videos
 }

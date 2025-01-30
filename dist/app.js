@@ -16,17 +16,35 @@ exports.app.get('/', (req, res) => {
     res.status(200).json({ version: '1.0' });
 });
 exports.app.get('/videos', (req, res) => {
-    const result = db_1.db.title;
-    res.status(200).json(result);
+    const video = db_1.db.videos;
+    res.status(200).json(video);
 });
 exports.app.get('/videos:id', (req, res) => {
-    for (const i of db_1.db.id) {
-        const FoundVideos = db_1.db.id.find(c => c === +req.params.id);
-        if (!FoundVideos) {
-            res.status(200).json(FoundVideos);
-            return;
-        }
+    const FoundVideos = db_1.db.videos.id.find((c) => c === +req.params.id);
+    if (!FoundVideos) {
+        res.status(404);
+        return;
     }
+    res.status(200).json(FoundVideos);
+});
+exports.app.post('/videos', (req, res) => {
+    if (!req.body.title) {
+        res.status(400);
+        return;
+    }
+    db_1.db.videos.author.push(req.body.author);
+    db_1.db.videos.id.push(req.body.id);
+    db_1.db.videos.title.push(req.body.title);
+    res.status(201);
+});
+exports.app.delete('/videos:id', (req, res) => {
+    const flag = db_1.db.videos.id.find((c) => c === +req.params.id);
+    if (!flag) {
+        db_1.db.videos = db_1.db.videos.filter((c, i) => c.id !== +req.params.id);
+        res.status(204);
+        return;
+    }
+    res.status(404);
 });
 //app.get(SETTINGS.PATH.VIDEOS, getVideosController)
 //app.use(SETTINGS.PATH.VIDEOS, videosRouter)
