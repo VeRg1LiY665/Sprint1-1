@@ -1,10 +1,11 @@
 import {Request, Response, Router} from 'express'
 import {db} from '../db/db'
+import {inputValidation} from "../validation/InputVideoModel";
 
 export const videoRouter = Router();
 
 const videoController= {
-   getVideos: (req: Request, res: Response<any /*OutputVideoType[]*/>) => {
+   getVideos: (req: Request, res: Response) => {
     const videos = db.videos // получаем видео из базы данных
     res.status(200).json(videos) // отдаём видео в качестве ответа
 },
@@ -26,16 +27,25 @@ const videoController= {
     res.status(404)
 },
     createVideo: (req: Request, res: Response) => {
-
-       const video={
-           ...req.body,
-           id : Math.floor(Date.now() / 1000+Math.random())
-       }
-       db.videos.push(video)
-        res.status(201).json(video);
+       //const errors  = inputValidation(req.body)
+       //if (!errors.errorsMessages.length) {
+            const video = {
+                ...req.body,
+                id: Math.floor(Date.now() / 1000 + Math.random())
+            }
+            db.videos.push(video)
+            res.status(201).json(video);
+            return
+       // }
+     //  res.status(400).json(errors)
+    },
+    wrongURL:(req: Request, res: Response) => {
+       res.status(404)
     }
 }
 
+
+videoRouter.get('/', videoController.wrongURL)
 videoRouter.get('/', videoController.getVideos)
 videoRouter.get('/:id', videoController.getVideoByID)
 videoRouter.post('/', videoController.createVideo)
