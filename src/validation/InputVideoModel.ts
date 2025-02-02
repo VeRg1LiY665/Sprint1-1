@@ -9,7 +9,7 @@ export const inputValidation = (video: InputVideoType) => {
         errorsMessages: []
     }
     if (!Array.isArray(video.availableResolution)
-        || Resolutions.find((x)=>x===video.availableResolution)
+        || Resolutions.find((x)=>x==video.availableResolution)
     ) {
         errors.errorsMessages.push({
             message: 'error!!!!', field: 'availableResolution'
