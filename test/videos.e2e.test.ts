@@ -38,7 +38,7 @@ describe('/videos', () => {
          const newVideo: any /*InputVideoType*/ = {
              title: 'some title',
              author: 'some author',
-             availableResolution: ["P144" /*Resolutions.P144*/]
+             availableResolution: ["" /*Resolutions.P144*/]
              // ...
          }
 

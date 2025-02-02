@@ -8,7 +8,7 @@ const inputValidation = (video) => {
         errorsMessages: []
     };
     if (!Array.isArray(video.availableResolution)
-        || Resolutions.find((x) => x === video.availableResolution)) {
+        || video.availableResolution.find((x) => Resolutions[x])) {
         errors.errorsMessages.push({
             message: 'error!!!!', field: 'availableResolution'
         });

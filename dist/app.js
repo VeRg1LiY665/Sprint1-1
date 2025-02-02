@@ -19,7 +19,7 @@ exports.app.get('/', (req, res) => {
     res.status(200).json({ version: '1.01' });
 });
 exports.app.delete('/testing/all-data', (req, res) => {
-    (0, db_1.setDB)();
+    db_1.db.videos = [];
     res.status(204).json('All data is deleted');
 });
 exports.app.use(settings_1.SETTINGS.PATH.VIDEOS, VideoController_1.videoRouter);
