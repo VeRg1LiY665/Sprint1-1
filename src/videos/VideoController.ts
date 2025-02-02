@@ -42,6 +42,22 @@ const videoController= {
             return
         }
        res.status(400).json(errors)
+    },
+
+    updateVideo: (req: Request, res: Response) => {
+        const errors  = inputValidation(req.body)
+
+        if (!errors.errorsMessages.length) {
+            const video = {
+                ...req.body,
+                id: req.params.id
+            }
+            db.videos = db.videos.filter((c: VideoDBType)  => c.id !== +req.params.id)
+            db.videos.push(video)
+            res.status(204).json(video);
+            return
+        }
+        res.status(400).json(errors)
     }
 }
 
@@ -51,3 +67,4 @@ videoRouter.get('/', videoController.getVideos)
 videoRouter.get('/:id', videoController.getVideoByID)
 videoRouter.post('/', videoController.createVideo)
 videoRouter.delete('/:id', videoController.deleteVideo)
+videoRouter.put('/:id', videoController.updateVideo)

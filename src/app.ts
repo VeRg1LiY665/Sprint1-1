@@ -5,6 +5,7 @@ import cors from 'cors'
 //import {VideoController} from "./videos/VideoController";
 import {SETTINGS} from "./settings";
 import {videoRouter} from "./videos/VideoController";
+import {setDB} from "./db/db";
 
 export const app = express() // создать приложение
 app.use(express.json()) // создание свойств-объектов body и query во всех реквестах
@@ -12,7 +13,10 @@ app.use(cors()) // разрешить любым фронтам делать з�
 
 
 app.get('/', (req, res) => {
-    res.status(200).json({version: '1.0'})
+    res.status(200).json({version: '1.01'})
 })
-
+app.delete('/testing/all-data', (req: Request, res: Response) => {
+    setDB()
+    res.status(204).json('All data is deleted')
+})
 app.use(SETTINGS.PATH.VIDEOS, videoRouter)

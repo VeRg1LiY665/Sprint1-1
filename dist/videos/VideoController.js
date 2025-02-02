@@ -37,9 +37,21 @@ const videoController = {
             return;
         }
         res.status(400).json(errors);
+    },
+    updateVideo: (req, res) => {
+        const errors = (0, InputVideoModel_1.inputValidation)(req.body);
+        if (!errors.errorsMessages.length) {
+            const video = Object.assign(Object.assign({}, req.body), { id: req.params.id });
+            db_1.db.videos = db_1.db.videos.filter((c) => c.id !== +req.params.id);
+            db_1.db.videos.push(video);
+            res.status(204).json(video);
+            return;
+        }
+        res.status(400).json(errors);
     }
 };
 exports.videoRouter.get('/', videoController.getVideos);
 exports.videoRouter.get('/:id', videoController.getVideoByID);
 exports.videoRouter.post('/', videoController.createVideo);
 exports.videoRouter.delete('/:id', videoController.deleteVideo);
+exports.videoRouter.put('/:id', videoController.updateVideo);
