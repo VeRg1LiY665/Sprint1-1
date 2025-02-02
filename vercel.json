@@ -1,3 +1,17 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+
+  "name": "sprint1-1",
+
+  "builds": [
+
+    { "src": "app.js", "use": "@vercel/node" }
+
+  ],
+
+  "routes": [
+
+    { "src": "/(.*)", "dest": "/app.js" }
+
+  ]
+
 }
