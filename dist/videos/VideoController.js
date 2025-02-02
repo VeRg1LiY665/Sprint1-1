@@ -32,7 +32,7 @@ const videoController = {
         const errors = (0, InputVideoModel_1.inputValidation)(req.body);
         console.log(errors.errorsMessages);
         if (!errors.errorsMessages.length) {
-            const video = Object.assign(Object.assign({}, req.body), { id: Math.floor(Date.now() / 1000 + Math.random()) });
+            const video = Object.assign(Object.assign({}, req.body), { id: Math.floor(Date.now() / 1000 + Math.random()), createdAt: new Date().toISOString(), publicationDate: new Date(new Date().getTime() + 86400000).toISOString() });
             db_1.db.videos.push(video);
             res.status(201).json(video);
             return;
@@ -42,7 +42,7 @@ const videoController = {
     updateVideo: (req, res) => {
         const errors = (0, InputVideoModel_1.inputValidation)(req.body);
         if (!errors.errorsMessages.length) {
-            const video = Object.assign(Object.assign({}, req.body), { id: req.params.id });
+            const video = Object.assign(Object.assign({}, req.body), { id: req.params.id, createdAt: (db_1.db.videos.filter((c) => c.id !== +req.params.id)).createdAt });
             db_1.db.videos = db_1.db.videos.filter((c) => c.id !== +req.params.id);
             db_1.db.videos.push(video);
             res.status(204).json(video);

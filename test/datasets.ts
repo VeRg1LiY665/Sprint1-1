@@ -8,11 +8,11 @@ export const video1: VideoDBType = {
     id: 543134656,//Date.now() + Math.random(),
     title: 't' + Date.now() + Math.random(),
     author: 'a' + Date.now() + Math.random(),
-    // canBeDownloaded: true,
-    // minAgeRestriction: null,
-    // createdAt: new Date().toISOString(),
-    // publicationDate: new Date().toISOString(),
-    // availableResolution: [Resolutions.P240],
+     canBeDownloaded: true,
+     minAgeRestriction: null,
+     createdAt: new Date().toISOString(),
+     publicationDate: new Date().toISOString(),
+     availableResolution: ["P144"],
 }
 
 // ...

@@ -39,8 +39,11 @@ describe('/videos', () => {
          const newVideo: InputVideoType = {
              title: 'null',
              author: 'null',
-             availableResolution: ["P144"]
-             // ...
+             availableResolution: ["P144"],
+             canBeDownloaded: true,
+             minAgeRestriction: null,
+             publicationDate: new Date().toISOString(),
+
          }
 
          const res = await req
@@ -57,7 +60,7 @@ describe('/videos', () => {
        // setDB()
 
         const res = await req
-            .delete('/videos/543134656')
+            .delete(SETTINGS.PATH.VIDEOS+'/1')
             .expect(204)
 
         console.log(res.body)

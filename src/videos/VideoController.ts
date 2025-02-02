@@ -20,7 +20,7 @@ const videoController= {
         res.status(200).json(FoundVideos)
     },
     deleteVideo: (req: Request, res: Response) => {
-    const flag = db.videos.find((c:VideoDBType)=>c.id===+req.params.id)
+    const flag = db.videos.find((c:VideoDBType)=>c.id=== +req.params.id)
         console.log(flag)
         if(!flag) {
         res.status(404).json('Error: video not found');
@@ -35,7 +35,9 @@ const videoController= {
        if (!errors.errorsMessages.length) {
             const video = {
                 ...req.body,
-                id: Math.floor(Date.now() / 1000 + Math.random())
+                id: Math.floor(Date.now() / 1000 + Math.random()),
+                createdAt: new Date().toISOString(),
+                publicationDate: new Date(new Date().getTime() + 86400000).toISOString()
             }
             db.videos.push(video)
             res.status(201).json(video);
@@ -50,7 +52,8 @@ const videoController= {
         if (!errors.errorsMessages.length) {
             const video = {
                 ...req.body,
-                id: req.params.id
+                id: req.params.id,
+                createdAt: (db.videos.filter((c: VideoDBType)  => c.id !== +req.params.id)).createdAt
             }
             db.videos = db.videos.filter((c: VideoDBType)  => c.id !== +req.params.id)
             db.videos.push(video)

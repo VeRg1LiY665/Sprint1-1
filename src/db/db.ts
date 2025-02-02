@@ -10,6 +10,11 @@ export type VideoDBType = {
     author: string;
     id: number;
     title: string;
+    canBeDownloaded: boolean;
+    minAgeRestriction: any;
+    publicationDate: string;
+    createdAt: string;
+    availableResolution: string[],
 }
 
 export const db: DBType = { // создаём базу данных (пока это просто переменная)
