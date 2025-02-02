@@ -28,5 +28,10 @@ export const inputValidation = (video: InputVideoType) => {
         })
     }
 
+    if (typeof(video.canBeDownloaded)!=="boolean") {
+        errors.errorsMessages.push({
+            message: 'error!!!!', field: 'canBeDownloaded'
+        })
+    }
     return errors
 }
