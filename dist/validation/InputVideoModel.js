@@ -7,18 +7,18 @@ const inputValidation = (video) => {
     const errors = {
         errorsMessages: []
     };
-    if (!Array.isArray(video.availableResolution)
-        || video.availableResolution.find((x) => Resolutions[x])) {
+    if ((Array.isArray(video.availableResolution))
+        && (!video.availableResolution.find((x) => Resolutions[x]))) {
         errors.errorsMessages.push({
             message: 'error!!!!', field: 'availableResolution'
         });
     }
-    if ((video.title.length > 40) || (!video.title.length)) {
+    if ((!video.title) || (video.title.length > 40)) {
         errors.errorsMessages.push({
             message: 'error!!!!', field: 'title'
         });
     }
-    if ((video.author.length > 20) || (!video.author.length)) {
+    if ((!video.author) || (video.author.length > 20)) {
         errors.errorsMessages.push({
             message: 'error!!!!', field: 'author'
         });

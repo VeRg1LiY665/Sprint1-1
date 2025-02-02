@@ -36,9 +36,9 @@ describe('/videos', () => {
  it('should create', async () => {
          setDB()
          const newVideo: any /*InputVideoType*/ = {
-             title: 'some title',
-             author: 'some author',
-             availableResolution: ["" /*Resolutions.P144*/]
+             title: 'null',
+             author: 'null',
+             availableResolution: ["P1234" /*Resolutions.P144*/]
              // ...
          }
 

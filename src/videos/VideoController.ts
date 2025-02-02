@@ -31,7 +31,7 @@ const videoController= {
 },
     createVideo: (req: Request, res: Response) => {
        const errors  = inputValidation(req.body)
-
+        console.log(errors.errorsMessages)
        if (!errors.errorsMessages.length) {
             const video = {
                 ...req.body,

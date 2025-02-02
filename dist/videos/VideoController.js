@@ -30,6 +30,7 @@ const videoController = {
     },
     createVideo: (req, res) => {
         const errors = (0, InputVideoModel_1.inputValidation)(req.body);
+        console.log(errors.errorsMessages);
         if (!errors.errorsMessages.length) {
             const video = Object.assign(Object.assign({}, req.body), { id: Math.floor(Date.now() / 1000 + Math.random()) });
             db_1.db.videos.push(video);
