@@ -56,7 +56,7 @@ describe('/videos', () => {
        // setDB()
 
         const res = await req
-            .delete(SETTINGS.PATH.VIDEOS +'/2')
+            .delete('/videos/543134656')
             .expect(204)
 
         console.log(res.body)

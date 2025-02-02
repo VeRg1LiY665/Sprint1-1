@@ -5,7 +5,7 @@ import {DBType, VideoDBType} from '../src/db/db'
 // готовые данные для переиспользования в тестах
 
 export const video1: VideoDBType = {
-    id: Date.now() + Math.random(),
+    id: 543134656,//Date.now() + Math.random(),
     title: 't' + Date.now() + Math.random(),
     author: 'a' + Date.now() + Math.random(),
     // canBeDownloaded: true,
