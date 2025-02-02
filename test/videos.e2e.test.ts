@@ -2,6 +2,7 @@ import {req} from './test-helpers'
  import {setDB} from '../src/db/db'
  import {dataset1} from './datasets'
 import {SETTINGS} from '../src/settings'
+import {InputVideoType} from "../src/IO types/InputVideoType";
 
 describe('/videos', () => {
     beforeAll(async () => { // очистка базы данных перед началом тестирования
@@ -35,10 +36,10 @@ describe('/videos', () => {
 
  it('should create', async () => {
          setDB()
-         const newVideo: any /*InputVideoType*/ = {
+         const newVideo: InputVideoType = {
              title: 'null',
              author: 'null',
-             availableResolution: ["P1234" /*Resolutions.P144*/]
+             availableResolution: ["P144"]
              // ...
          }
 
