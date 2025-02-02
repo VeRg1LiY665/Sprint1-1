@@ -1,5 +1,5 @@
 import {Request, Response, Router} from 'express'
-import {db} from '../db/db'
+import {db, VideoDBType} from '../db/db'
 import {inputValidation} from "../validation/InputVideoModel";
 
 export const videoRouter = Router();
@@ -10,25 +10,29 @@ const videoController= {
     res.status(200).json(videos) // отдаём видео в качестве ответа
 },
     getVideoByID: (req: Request, res: Response) => {
-        const FoundVideos = db.videos.id.find((c: any) => c === +req.params.id)
+      const FoundVideos = db.videos.find((c: VideoDBType) => c.id === +req.params.id)
+
         if (!FoundVideos) {
-            res.status(404)
+            res.status(404).json('Error: video not found')
             return
         }
+
         res.status(200).json(FoundVideos)
     },
     deleteVideo: (req: Request, res: Response) => {
-    const flag:boolean = db.videos.id.find((c:any)=>c===+req.params.id)
-    if(!flag) {
-        db.videos = db.videos.filter((c: any): boolean => c.id !== +req.params.id)
-        res.status(204);
+    const flag = db.videos.find((c:VideoDBType)=>c.id===+req.params.id)
+        console.log(flag)
+        if(!flag) {
+        res.status(404).json('Error: video not found');
         return;
     }
-    res.status(404)
+        db.videos = db.videos.filter((c: VideoDBType)  => c.id !== +req.params.id)
+        res.status(204)
 },
     createVideo: (req: Request, res: Response) => {
-       //const errors  = inputValidation(req.body)
-       //if (!errors.errorsMessages.length) {
+       const errors  = inputValidation(req.body)
+
+       if (!errors.errorsMessages.length) {
             const video = {
                 ...req.body,
                 id: Math.floor(Date.now() / 1000 + Math.random())
@@ -36,16 +40,13 @@ const videoController= {
             db.videos.push(video)
             res.status(201).json(video);
             return
-       // }
-     //  res.status(400).json(errors)
-    },
-    wrongURL:(req: Request, res: Response) => {
-       res.status(404)
+        }
+       res.status(400).json(errors)
     }
 }
 
 
-videoRouter.get('/', videoController.wrongURL)
+
 videoRouter.get('/', videoController.getVideos)
 videoRouter.get('/:id', videoController.getVideoByID)
 videoRouter.post('/', videoController.createVideo)

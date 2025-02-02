@@ -17,6 +17,6 @@ export const video1: VideoDBType = {
 
 // ...
 
-export const dataset1: DBType|any = {
+export const dataset1: DBType = {
     videos: [video1],
 }

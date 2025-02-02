@@ -27,10 +27,10 @@ describe('/videos', () => {
             .get(SETTINGS.PATH.VIDEOS)
             .expect(200)
 
-        console.log(res.body)
+        console.log(Object.values(res.body)[0])
 
-         expect(res.body.length).toBe(1)
-         expect(res.body[0]).toEqual(dataset1.videos[0])
+         expect(Object.values(res.body.videos).length).toBe(1)
+         expect(Object.values(res.body.videos)[0]).toEqual(dataset1.videos[0])
     })
 
  it('should create', async () => {
@@ -38,7 +38,7 @@ describe('/videos', () => {
          const newVideo: any /*InputVideoType*/ = {
              title: 't1',
              author: 'a1',
-             availableResolution: ['P144' /*Resolutions.P144*/]
+             availableResolution: ['P1440' /*Resolutions.P144*/]
              // ...
          }
 
@@ -52,13 +52,25 @@ describe('/videos', () => {
          expect(res.body.availableResolution).toEqual(newVideo.availableResolution)
      })
 
-     it('shouldn\'t find', async () => {
-         setDB(dataset1)
+    it('should delete', async () => {
+       // setDB()
 
+        const res = await req
+            .delete(SETTINGS.PATH.VIDEOS +'/2')
+            .expect(204)
+
+        console.log(res.body)
+
+       // expect(res.body.availableResolution).toEqual(newVideo.availableResolution)
+    })
+
+     it('shouldn\'t find', async () => {
+        //setDB(dataset1)
+         //console.log(dataset1)
          const res = await req
              .get(SETTINGS.PATH.VIDEOS + '/1')
-             .expect(404) // проверка на ошибку
+             .expect(404)
+          console.log(res.body)
 
-         console.log(res.body)
      })
 })

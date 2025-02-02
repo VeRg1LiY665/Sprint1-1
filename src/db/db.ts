@@ -4,7 +4,7 @@
 
 
 export type DBType = { // типизация базы данных (что мы будем в ней хранить)
-    videos: VideoDBType[]; // VideoDBType[]
+    videos: VideoDBType[]|any; // VideoDBType[]
     }
 export type VideoDBType = {
     author: string;
@@ -12,17 +12,17 @@ export type VideoDBType = {
     title: string;
 }
 
-export const db: DBType|any = { // создаём базу данных (пока это просто переменная)
-    videos: [{author:'author1', id:1, title:'title1'}],
+export const db: DBType = { // создаём базу данных (пока это просто переменная)
+    videos: [{author:'author1', id:1, title:'title1'},{author:'author2', id:2, title:'title2'}],
 }
 
 // функция для быстрой очистки/заполнения базы данных для тестов
-export const setDB = (dataset?: Partial<VideoDBType>) => {
+export const setDB = (dataset?: Partial<DBType>) => {
     if (!dataset) {
         db.videos = []
         return
     }
 
     // если что-то передано - то заменяем старые значения новыми
-    db.videos = dataset || db.videos
+    db.videos = dataset //|| db.videos
 }
