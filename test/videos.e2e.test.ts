@@ -6,7 +6,7 @@ import {InputVideoType} from "../src/IO types/InputVideoType";
 
 describe('/videos', () => {
     beforeAll(async () => { // очистка базы данных перед началом тестирования
-         setDB()
+         //setDB()
      })
 
     it('should get empty array', async () => {

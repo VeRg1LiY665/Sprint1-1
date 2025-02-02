@@ -30,9 +30,14 @@ const videoController = {
     },
     createVideo: (req, res) => {
         const errors = (0, InputVideoModel_1.inputValidation)(req.body);
-        console.log(errors.errorsMessages);
         if (!errors.errorsMessages.length) {
             const video = Object.assign(Object.assign({}, req.body), { id: Math.floor(Date.now() / 1000 + Math.random()), createdAt: new Date().toISOString(), publicationDate: new Date(new Date().getTime() + 86400000).toISOString() });
+            if (!video.canBeDownloaded) {
+                video.canBeDownloaded = false;
+            }
+            if (!video.minAgeRestriction) {
+                video.minAgeRestriction = null;
+            }
             db_1.db.videos.push(video);
             res.status(201).json(video);
             return;

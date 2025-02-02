@@ -26,19 +26,21 @@ const videoController= {
         res.status(404).json('Error: video not found');
         return;
     }
-        db.videos = db.videos.filter((c: VideoDBType)  => c.id !== +req.params.id)
-        res.status(204)
+         db.videos= db.videos.filter((c: VideoDBType)  => c.id !== +req.params.id)
+         res.status(204)
 },
     createVideo: (req: Request, res: Response) => {
        const errors  = inputValidation(req.body)
-        console.log(errors.errorsMessages)
+
        if (!errors.errorsMessages.length) {
             const video = {
                 ...req.body,
                 id: Math.floor(Date.now() / 1000 + Math.random()),
                 createdAt: new Date().toISOString(),
-                publicationDate: new Date(new Date().getTime() + 86400000).toISOString()
-            }
+                publicationDate: new Date(new Date().getTime() + 86400000).toISOString(),
+                            }
+            if (!video.canBeDownloaded) {video.canBeDownloaded=false}
+            if (!video.minAgeRestriction) {video.minAgeRestriction=null}
             db.videos.push(video)
             res.status(201).json(video);
             return
