@@ -26,7 +26,7 @@ const videoController = {
             return;
         }
         db_1.db.videos = db_1.db.videos.filter((c) => c.id !== +req.params.id);
-        res.status(204);
+        res.sendStatus(204);
     },
     createVideo: (req, res) => {
         const errors = (0, InputVideoModel_1.inputValidation)(req.body);
