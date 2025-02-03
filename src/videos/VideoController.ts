@@ -49,7 +49,13 @@ const videoController= {
     },
 
     updateVideo: (req: Request, res: Response) => {
-        const errors  = inputValidation(req.body)
+        const FoundVideos = db.videos.find((c: VideoDBType) => c.id === +req.params.id)
+
+        if (!FoundVideos) {
+            res.status(404).json('Error: video not found')
+            return
+        }
+       const errors  = inputValidation(req.body)
 
         if (!errors.errorsMessages.length) {
             const video = {

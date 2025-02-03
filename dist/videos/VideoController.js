@@ -45,6 +45,11 @@ const videoController = {
         res.status(400).json(errors);
     },
     updateVideo: (req, res) => {
+        const FoundVideos = db_1.db.videos.find((c) => c.id === +req.params.id);
+        if (!FoundVideos) {
+            res.status(404).json('Error: video not found');
+            return;
+        }
         const errors = (0, InputVideoModel_1.inputValidation)(req.body);
         if (!errors.errorsMessages.length) {
             const video = Object.assign(Object.assign({}, req.body), { id: req.params.id, createdAt: (db_1.db.videos.filter((c) => c.id !== +req.params.id)).createdAt });
