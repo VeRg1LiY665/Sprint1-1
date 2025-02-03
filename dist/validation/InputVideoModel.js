@@ -6,12 +6,13 @@ const inputValidation = (video) => {
     const errors = {
         errorsMessages: []
     };
-    if (!Array.isArray(video.availableResolution)
-        || !video.availableResolution.every(function (p) { return Resolutions.indexOf(p) >= 0; })) {
-        errors.errorsMessages.push({
-            message: 'error!!!!', field: 'availableResolution'
-        });
-    }
+    /*   if (!Array.isArray(video.availableResolution)
+       || !video.availableResolution.every(function (p){return Resolutions.indexOf(p) >=0})
+   ) {
+       errors.errorsMessages.push({
+           message: 'error!!!!', field: 'availableResolution'
+       })
+   }*/
     if ((!video.title) || (video.title.length > 40)) {
         errors.errorsMessages.push({
             message: 'error!!!!', field: 'title'
