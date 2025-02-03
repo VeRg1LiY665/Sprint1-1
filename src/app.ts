@@ -13,7 +13,7 @@ app.use(cors()) // разрешить любым фронтам делать з�
 
 
 app.get('/', (req, res) => {
-    res.status(200).json({version: '1.08'})
+    res.status(200).json({version: '1.09'})
 })
 app.delete('/testing/all-data', (req: Request, res: Response) => {
     db.videos = []
