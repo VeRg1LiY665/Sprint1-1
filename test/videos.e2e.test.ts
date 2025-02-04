@@ -39,7 +39,7 @@ describe('/videos', () => {
          const newVideo: InputVideoType = {
              title: 'null',
              author: 'null',
-             availableResolution: ["P144", "undefined", "P720"],
+             availableResolution: ["P144", "undefined"],
              canBeDownloaded: true,
              minAgeRestriction: null,
              publicationDate: new Date().toISOString(),
