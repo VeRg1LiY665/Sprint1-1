@@ -35,9 +35,9 @@ const videoController= {
        if (!errors.errorsMessages.length) {
             const video = {
                 ...req.body,
-                id: Math.floor(Date.now() / 1000 + Math.random()),
+                id: Math.floor(Date.now() + Math.random()),
                 createdAt: new Date().toISOString(),
-                publicationDate: new Date(new Date().getTime() + 86400000).toISOString(),
+                publicationDate: req.body.publicationDate || new Date(new Date().getTime() + 86400000).toISOString(),
                             }
             if (!video.canBeDownloaded) {video.canBeDownloaded=false}
             if (!video.minAgeRestriction) {video.minAgeRestriction=null}
@@ -49,22 +49,20 @@ const videoController= {
     },
 
     updateVideo: (req: Request, res: Response) => {
-        const FoundVideos = db.videos.find((c: VideoDBType) => c.id === +req.params.id)
+        const index = db.videos.findIndex((c: VideoDBType) => c.id === +req.params.id)
 
-        if (!FoundVideos) {
+        if (index < 0) {
             res.status(404).json('Error: video not found')
             return
         }
        const errors  = inputValidation(req.body)
 
         if (!errors.errorsMessages.length) {
-            const video = {
-                ...req.body,
-                id: req.params.id,
-                createdAt: (db.videos.filter((c: VideoDBType)  => c.id !== +req.params.id)).createdAt
+          const video  = {
+              ...db.videos[index],
+              ...req.body,
             }
-            db.videos = db.videos.filter((c: VideoDBType)  => c.id !== +req.params.id)
-            db.videos.push(video)
+            db.videos[index] = video
             res.status(204).json(video);
             return
         }

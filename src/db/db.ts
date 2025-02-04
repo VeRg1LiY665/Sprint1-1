@@ -3,31 +3,33 @@
 //import any = jasmine.any;
 
 
+import {Resolutions} from "../validation/InputVideoModel";
+
 export type DBType = { // типизация базы данных (что мы будем в ней хранить)
-    videos: VideoDBType[]|any; // VideoDBType[]
+    videos: VideoDBType[]; // VideoDBType[]
     }
 export type VideoDBType = {
     author: string;
     id: number;
     title: string;
     canBeDownloaded: boolean;
-    minAgeRestriction: any;
+    minAgeRestriction: number | null;
     publicationDate: string;
     createdAt: string;
-    availableResolution: string[],
+    availableResolution: typeof Resolutions
 }
 
 export const db: DBType = { // создаём базу данных (пока это просто переменная)
-    videos: [{author:'author1', id:1, title:'title1'},{author:'author2', id:2, title:'title2'}],
+    videos: [],
 }
 
 // функция для быстрой очистки/заполнения базы данных для тестов
-export const setDB = (dataset?: Partial<DBType>) => {
+export const setDB = (dataset?: VideoDBType) => {
     if (!dataset) {
         db.videos = []
         return
     }
 
     // если что-то передано - то заменяем старые значения новыми
-    db.videos = dataset //|| db.videos
+    db.videos = [dataset] //|| db.videos
 }

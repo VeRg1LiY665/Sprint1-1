@@ -2,7 +2,7 @@
 export type InputVideoType= {
     title: string,
     author: string,
-    availableResolution: string[],
+    availableResolutions: string[],
     canBeDownloaded: boolean,
     minAgeRestriction: any,
     publicationDate: string,

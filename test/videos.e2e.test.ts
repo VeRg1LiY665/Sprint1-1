@@ -1,5 +1,5 @@
 import {req} from './test-helpers'
- import {setDB} from '../src/db/db'
+ import {db, setDB} from '../src/db/db'
  import {dataset1} from './datasets'
 import {SETTINGS} from '../src/settings'
 import {InputVideoType} from "../src/IO types/InputVideoType";
@@ -31,7 +31,7 @@ describe('/videos', () => {
         console.log(Object.values(res.body)[0])
 
          expect(Object.values(res.body.videos).length).toBe(1)
-         expect(Object.values(res.body.videos)[0]).toEqual(dataset1.videos[0])
+         expect(Object.values(res.body.videos)[0]).toEqual(dataset1)
     })
 
  it('should create', async () => {
@@ -39,7 +39,7 @@ describe('/videos', () => {
          const newVideo: InputVideoType = {
              title: 'null',
              author: 'null',
-             availableResolution: ["P144", "undefined"],
+             availableResolutions: ["P144", 'P1080'],
              canBeDownloaded: true,
              minAgeRestriction: null,
              publicationDate: new Date().toISOString(),
@@ -53,19 +53,17 @@ describe('/videos', () => {
 
          console.log(res.body)
 
-         expect(res.body.availableResolution).toEqual(newVideo.availableResolution)
+         expect(res.body.availableResolutions).toEqual(newVideo.availableResolutions)
      })
 
     it('should delete', async () => {
-       // setDB()
-
+        setDB(dataset1)
+console.log(db.videos)
         const res = await req
-            .delete(SETTINGS.PATH.VIDEOS+'/1')
+            .delete(SETTINGS.PATH.VIDEOS+'/543134656')
             .expect(204)
 
         console.log(res.body)
-
-       // expect(res.body.availableResolution).toEqual(newVideo.availableResolution)
     })
 
      it('shouldn\'t find', async () => {

@@ -31,7 +31,7 @@ const videoController = {
     createVideo: (req, res) => {
         const errors = (0, InputVideoModel_1.inputValidation)(req.body);
         if (!errors.errorsMessages.length) {
-            const video = Object.assign(Object.assign({}, req.body), { id: Math.floor(Date.now() / 1000 + Math.random()), createdAt: new Date().toISOString(), publicationDate: new Date(new Date().getTime() + 86400000).toISOString() });
+            const video = Object.assign(Object.assign({}, req.body), { id: Math.floor(Date.now() + Math.random()), createdAt: new Date().toISOString(), publicationDate: req.body.publicationDate || new Date(new Date().getTime() + 86400000).toISOString() });
             if (!video.canBeDownloaded) {
                 video.canBeDownloaded = false;
             }
@@ -45,16 +45,15 @@ const videoController = {
         res.status(400).json(errors);
     },
     updateVideo: (req, res) => {
-        const FoundVideos = db_1.db.videos.find((c) => c.id === +req.params.id);
-        if (!FoundVideos) {
+        const index = db_1.db.videos.findIndex((c) => c.id === +req.params.id);
+        if (index < 0) {
             res.status(404).json('Error: video not found');
             return;
         }
         const errors = (0, InputVideoModel_1.inputValidation)(req.body);
         if (!errors.errorsMessages.length) {
-            const video = Object.assign(Object.assign({}, req.body), { id: req.params.id, createdAt: (db_1.db.videos.filter((c) => c.id !== +req.params.id)).createdAt });
-            db_1.db.videos = db_1.db.videos.filter((c) => c.id !== +req.params.id);
-            db_1.db.videos.push(video);
+            const video = Object.assign(Object.assign({}, db_1.db.videos[index]), req.body);
+            db_1.db.videos[index] = video;
             res.status(204).json(video);
             return;
         }
